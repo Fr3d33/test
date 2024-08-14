@@ -7,49 +7,70 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  const MyHomePage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String enteredName = '';
+  String enteredAge = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: const Text('Einfache Textspeicherung'),
       ),
-      body: const Center(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Padding(padding: EdgeInsets.all(20)),
             TextField(
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "What is your name?",
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0)),
-              style: TextStyle(color: Colors.black),
-            )
+              onChanged: (text) {
+                setState(() {
+                  enteredName = text;
+                });
+              },
+              decoration: const InputDecoration(
+                labelText: 'Geben Sie ihren Namen ein',
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            TextField(
+              onChanged: (text) {
+                setState(() {
+                  enteredAge = text;
+                });
+              },
+              decoration: const InputDecoration(
+                labelText: 'Geben Sie ihr Alter ein',
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                print(
+                    "Eingegebener Name: $enteredName, Eingegebenes Alter: $enteredAge");
+              },
+              child: const Text('Text ausgeben'),
+            ),
           ],
         ),
       ),
